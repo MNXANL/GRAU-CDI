@@ -27,22 +27,27 @@ def Encode(M, m2c):
     return C
 
 print('Ejercicio 1:', Encode('abcde', m2c))
-   
+
+
 ''' 
 2. Definir una función Decode(C, c2m) que, dado un mensaje codificado C y un diccionario 
 de decodificación c2m, devuelva el mensaje original M.
+
+HINT: usar la función find(string[, begin[, end]])
 '''
 def Decode(C,c2m):
     M = ''
-    for c in C:
-        if c in c2m:
-            print(c2m[0])
-            print(c, c2m[c])
-            M += c2m[c]
+    K = ''
+    while len(C) > 0:
+        K += C[0]
+        C = C[1:]
+        if K in c2m:
+            M += c2m[K]
+            K = ''
     return M
   
 
-print('Ejercicio 2:', Decode('01110010101011', m2c)) # El mensaje codificado es 'abcde'
+print('Ejercicio 2:', Decode('01110010101011', c2m)) # El mensaje codificado es 'abcde'
 
 #------------------------------------------------------------------------
 # Ejemplo 1
@@ -62,6 +67,13 @@ esperadas 50, 20, 15, 10 y 5 para los caracteres
 'a', 'b', 'c', 'd', 'e' y codificarlo.
 '''
 
+
+def list2str(M):
+    Str = ''
+    for i in M:
+        Str += i
+    return Str
+
 def msg_generator():                # Freq:
     a = 'aaaaaaaaaaaaaaaaaaaaaaaaa' #   25
     b = 'bbbbbbbbbbbbbbbbbbbb'      #   20
@@ -70,7 +82,7 @@ def msg_generator():                # Freq:
     e = 'eeeee'                     #    5
     ListedM = list(a+b+c+d+e)
     random.shuffle(ListedM)
-    M = str(ListedM)
+    M = list2str(ListedM)
     return M
 
 M = msg_generator()
@@ -106,25 +118,27 @@ Codificar y decodificar 20 mensajes aleatorios de longitudes también aleatorios
 Comprobar si los mensajes decodificados coinciden con los originales.
 '''
 
-def ejercicio5(m2c, c2m):
+def decode20msgs(m2c, c2m):
     M = list()
     alphabet = ['a', 'b', 'c', 'd', 'e']
     for i in range(0, 20):
-        M[i] = ''.join(random.SystemRandom().choice(alphabet) for _ in range(random.randint(0, 100)))
+        #N = random.randint(1, 100)
+        N = 5
+        M.append(  ''.join(random.choice(alphabet) for _ in range(N))  )
     
-    C = list()
-    D = list()
     for i in range(0, 20):
-        C[i] = Encode(M[i], m2c)
-        D[i] = Decode(C[i], c2m)
-        if (M[i] == C[i]):
+        Enc = Encode(M[i], m2c) 
+        Dec = Decode(Enc, c2m)
+        
+        # Original vs decoded test
+        if (Enc == Dec):
             print('Index', i, 'HIT!')
         else:
             print('Index', i, 'MISS')
     
                                             
 
-print(ejercicio5(m2c, c2m))
+print(decode20msgs(m2c, c2m))
 
 
 
@@ -144,7 +158,16 @@ c2m = dict([(c,m) for m, c in R])
 Comprobar si los mensajes decodificados coinciden con los originales.
 '''
 
-#print('Ejercicio 6:', M, C)
+AE_cod = Encode('ae', m2c)
+AE_dec = Decode(AE_cod, c2m)
+
+print(AE_dec, AE_cod, 'Is decoding correct?', 'ae' == AE_dec)
+
+
+BE_cod = Encode('be', m2c)
+BE_dec = Decode(BE_cod, c2m)
+
+print(BE_dec, BE_cod, 'Is decoding correct?', 'be' == BE_dec)
 
 
 
