@@ -123,7 +123,7 @@ def decode20msgs(m2c, c2m):
     alphabet = ['a', 'b', 'c', 'd', 'e']
     for i in range(0, 20):
         #N = random.randint(1, 100)
-        N = 5
+        N = random.randint(0, 100)
         M.append(  ''.join(random.choice(alphabet) for _ in range(N))  )
     
     for i in range(0, 20):
