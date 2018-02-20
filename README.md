@@ -1,2 +1,2 @@
 # GRAU-CDI
-Repo de Compresión de Datos e Imégenes (QP 2018) 
+Repo de Compresión de Datos e Imágenes (QP 2018) 
