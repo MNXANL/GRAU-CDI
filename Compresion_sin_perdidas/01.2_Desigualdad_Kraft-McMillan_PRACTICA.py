@@ -48,6 +48,8 @@ def kraft3(L, Ln, q=2):
                 K += (1/L[i])
                 i += 1
         return K
+    # k <= (1-alpha) * q**l
+    # k <= (1-alpha) * L[i]**Ln
                 
     else: return 0
 
