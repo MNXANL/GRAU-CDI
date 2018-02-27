@@ -12,12 +12,11 @@ q-ario, decidir si pueden definir un código.
 def kraftSum(L, q):
     sum = 0
     for l in L:
-        sum += 1/(q ** l)
+        sum += pow(q, -l)
     return sum
 
 def kraft1(L, q=2):
-    sum = kraftSum(L, q)
-    return sum <= 1
+    return kraftSum(L, q) <= 1
 
 
 '''
@@ -40,16 +39,14 @@ un código.
 
 def kraft3(L, Ln, q=2):
     if kraft1(L, q):
-        alpha = kraftSum(L, q)
+        alpha = kraftSum(L, q) # info que s'esta fent servir
         K = 0
-        i = 0
-        while K+alpha <= 1 and i < len(L):
-            if len(L[i]) == len(Ln):
-                K += (1/L[i])
-                i += 1
-        return K
-    # k <= (1-alpha) * q**l
-    # k <= (1-alpha) * L[i]**Ln
+        
+        am1 = 1-alpha # -alpha + one -> Info que encara queda per ocupar
+        missing = pow(q, -Ln)
+        uneq = missing // am1
+
+        return uneq
                 
     else: return 0
 
@@ -59,6 +56,10 @@ código q-ario, hallar un código prefijo con palabras
 con dichas longitudes
 '''
 def Code(L, q=2):
+    ListCode = [str(x) for x in range(q)]
+    for l in L:
+        # what should I do?
+        
     return 0
 
 '''
