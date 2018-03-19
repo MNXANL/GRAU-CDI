@@ -90,19 +90,12 @@ DrawH()
 Hallar aproximadamente el máximo de  H(p, q, 1-p-q)
 '''
 def MaxH(step = 0.01):
-    
     Max = 0.0
-    #X = list()
-    #Y = list()
-    #Z = list()
-    for p in np.arange(0.0, 1.0, step):
-        for q in np.arange(0.0, 1.0, step):
+    for p in np.arange(0, 1, step):
+        for q in np.arange(0, p, step):
             if (1-p-q >= 0):
                 Z = [p, q, 1-p-q]
                 entropy = H1(Z)
-                #X.append(p)
-                #Y.append(q)
-                #Z.append(entropy)
                 if Max < entropy:  Max = entropy
     
     return Max
