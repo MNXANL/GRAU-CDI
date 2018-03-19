@@ -46,6 +46,29 @@ def Arithmetic(mensaje, alfabeto, probabilidades):
     return m, M
 
 
+
+import math
+import random
+
+def FindX(m, M):
+    t = 2
+    x = 1
+    NoOnes = True
+    while NoOnes:
+        pwr = (1/t)
+        diff = abs((M/pwr) - (m/pwr))
+        #print(diff, '\t', (M/pwr), (m/pwr), t)
+        t = t << 1  #pows of 2
+        if diff >= 1.0:
+            x = [i for i in range(math.ceil(M/pwr), math.ceil(m/pwr)) if i%2==0][0]
+            NoOnes = False;
+    #     {x,  t/2 }
+    return x, (t>>1) 
+
+def EncodeArithmetic1(mensaje, alfabeto, probabilidades):
+    m, M = Arithmetic(mensaje, alfabeto, probabilidades)
+    x, t = FindX(m, M)
+    return dec2bin(x/t)
 """
 Dado un mensaje y su alfabeto con su distribución de probabilidad
 dar el código que representa el mensaje obtenido a partir de la 
@@ -75,4 +98,5 @@ def EncodeArithmetic2(mensaje, alfabeto, probabilidades):
     return strng + '1'
 
 
+print(EncodeArithmetic1('ccda',['a','b','c','d'],[0.4,0.3,0.2,0.1]))
 print(EncodeArithmetic2('ccda',['a','b','c','d'],[0.4,0.3,0.2,0.1]))

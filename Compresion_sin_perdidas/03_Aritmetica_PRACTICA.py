@@ -72,12 +72,14 @@ def Arithmetic(mensaje, alfabeto, probabilidades):
     fx = [0.0] * len(f)
     diff = 1
     aux1 = 0
+    aux2 = 0
     for msg in mensaje:
         for i in range(0, len(f)):
             fx[i] = aux1 + (f[i]*diff)
         idx = alfabeto.index(msg)
         diff = fx[idx] - fx[idx+1]
         aux1 = fx[idx]
+        aux2 = fx[idx+1]
     m = aux1
     M = aux2
     return m, M
@@ -95,8 +97,37 @@ probabilidades=[0.4,0.3,0.2,0.1]
 EncodeArithmetic1(mensaje,alfabeto,probabilidades)='111000001'
 """
 
-def EncodeArithmetic1(mensaje, alfabeto, probabilidades):
+def FindX(m, M):
+    t = 2
+    iterations = 1
+    x = []
+    res = 1
+    NoOnes = True
+    while NoOnes and iterations < 100:
+        pwr = (1/t)
+        diff = abs((M/pwr) - (m/pwr))
+        t *= 2
+        iterations += 1
 
+        if diff >= 1.0:
+            NoOnes = False
+            x = [i for i in range(math.ceil(M/pwr), math.ceil(m/pwr)+1)]
+            if len(x) > 1 : 
+                if (x[0]%2 == 0): 
+                    res = x[0]
+                else:
+                    res = x[1]
+            elif len(x) == 1: 
+                res=x[0]
+            else: res = math.ceil(M/pwr)
+
+        #print('>>>', iterations, pwr)
+    return res, (t/2) 
+
+def EncodeArithmetic1(mensaje, alfabeto, probabilidades):
+    m, M = Arithmetic(mensaje, alfabeto, probabilidades)
+    x, t = FindX(m, M)
+    return dec2bin(x/t)
 
 """
 Dado un mensaje y su alfabeto con su distribución de probabilidad
@@ -107,7 +138,6 @@ mensaje='ccda'
 alfabeto=['a','b','c','d']
 probabilidades=[0.4,0.3,0.2,0.1]
 EncodeArithmetic2(mensaje,alfabeto,probabilidades)='111000001'
-
 """
     
 def EncodeArithmetic2(mensaje, alfabeto, probabilidades):
@@ -141,8 +171,8 @@ DecodeArithmetic(code,5,alfabeto,probabilidades)='ccdab'
 
 """
 
-def DecodeArithmetic(code,n,alfabeto,probabilidades):
-
+def DecodeArithmetic(code, n, alfabeto, probabilidades):
+    return 0
 
 '''
 Función que compara la longitud esperada del 
@@ -167,12 +197,12 @@ esperadas con las obtenidas.
 '''
 
 alfabeto=['a','b','c','d','e']
-probabilidades=[0.5,0.2,0.15,0.1,.05]
-U = 50*'a'+20*'b'+15*'c'+10*'d'+5*'e'
+probabilidades=[0.5, 0.2, 0.15, 0.1, 0.05]
+U = 50*'a' + 20*'b' + 15*'c' + 10*'d' + 5*'e'
 def rd_choice(X,k = 1):
     Y = []
     for _ in range(k):
-        Y +=[random.choice(X)]
+        Y += [random.choice(X)]
     return Y
 
 l_max=20
@@ -213,8 +243,10 @@ for _ in range(10):
     for x in L:
         mensaje += x
     print('---------- ',mensaje)    
-    C = EncodeArithmetic1(mensaje,alfabeto,probabilidades)
-    print(C)
+    C1 = EncodeArithmetic1(mensaje,alfabeto,probabilidades)
+    C2 = EncodeArithmetic2(mensaje,alfabeto,probabilidades)
+    print(C1)
+    print(C2)
 
     
 
