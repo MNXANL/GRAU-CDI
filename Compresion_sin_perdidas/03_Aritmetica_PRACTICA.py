@@ -19,8 +19,6 @@ nb número máximo de bits
 
 """
 
-
-
 def dec2bin(x, nb=100):
     val = ''
     mid = 0.5
@@ -32,6 +30,8 @@ def dec2bin(x, nb=100):
             x = x - mid
         mid /= 2
     return val
+
+
 
 def bin2dec(xb):
     mid = 0.5
@@ -89,7 +89,7 @@ def Arithmetic(mensaje, alfabeto, probabilidades):
 Dado un mensaje y su alfabeto con su distribución de probabilidad
 dar la representación binaria de x/2**(t) siendo t el menor 
 entero tal que 1/2**(t)<M-m, x entero (si es posible par) tal 
-que m/(2**(t)) <= x < M / (2**(t))
+que m/(2**(t)) <= x < M / (2**(t))set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 
 mensaje='ccda'
 alfabeto=['a','b','c','d']
@@ -99,14 +99,13 @@ EncodeArithmetic1(mensaje,alfabeto,probabilidades)='111000001'
 
 def FindX(m, M):
     t = 2
-    iterations = 1
     x = []
     res = 1
     NoOnes = True
     while NoOnes and iterations < 100:
         pwr = (1/t)
         diff = abs((M/pwr) - (m/pwr))
-        t *= 2
+        t = t<<1
         iterations += 1
 
         if diff >= 1.0:
@@ -121,14 +120,13 @@ def FindX(m, M):
                 res=x[0]
             else: res = math.ceil(M/pwr)
 
-        #print('>>>', iterations, pwr)
-    return res, (t/2) 
+    return res, (t>>1) 
 
 def EncodeArithmetic1(mensaje, alfabeto, probabilidades):
     m, M = Arithmetic(mensaje, alfabeto, probabilidades)
     x, t = FindX(m, M)
     return dec2bin(x/t)
-
+set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttabset tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 """
 Dado un mensaje y su alfabeto con su distribución de probabilidad
 dar el código que representa el mensaje obtenido a partir de la 
@@ -158,7 +156,6 @@ def EncodeArithmetic2(mensaje, alfabeto, probabilidades):
 Dada la representación binaria del número que representa un mensaje, la
 longitud del mensaje y el alfabeto con su distribución de probabilidad 
 dar el mensaje original
-
 code='0'
 longitud=4
 alfabeto=['a','b','c','d']
@@ -170,13 +167,22 @@ DecodeArithmetic(code,4,alfabeto,probabilidades)='ccda'
 DecodeArithmetic(code,5,alfabeto,probabilidades)='ccdab'
 
 """
-
 def DecodeArithmetic(code, n, alfabeto, probabilidades):
-    return 0
+    dec = ''
+    f = cdf(probabilidades)
+    while len(dec) < n:
+        t = 2
+        aux = 0
+        for c in code:
+            aux += str(c)*(1/t)
+            t = t<<1
+        asdasasda = f[0]
+    #complete this shit  	
+    return dec
 
 '''
 Función que compara la longitud esperada del 
-mensaje con la obtenida con la codificación aritmética
+mensaje con la obtenida con la codificación aritméticaset tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
 '''
 
 def comparacion(mensaje,alfabeto,probabilidades):
@@ -186,7 +192,7 @@ def comparacion(mensaje,alfabeto,probabilidades):
         p=p*probabilidades[indice[mensaje[i]]-1]
     aux=-math.log(p,2), len(EncodeArithmetic1(mensaje,alfabeto,probabilidades)), len(EncodeArithmetic2(mensaje,alfabeto,probabilidades))
     print('Información y longitudes:',aux)    
-    return aux
+    return auxset tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
         
         
 '''
