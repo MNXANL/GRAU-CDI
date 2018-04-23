@@ -71,25 +71,25 @@ def Arithmetic(mensaje, alfabeto, probabilidades):
     f = cdf(probabilidades)
     fx = [0.0] * len(f)
     diff = 1
-    aux1 = 0
-    aux2 = 0
+    m = 0
+    M = 0
     for msg in mensaje:
         for i in range(0, len(f)):
-            fx[i] = aux1 + (f[i]*diff)
+            fx[i] = m + (f[i]*diff)
         idx = alfabeto.index(msg)
-        diff = fx[idx] - fx[idx+1]
-        aux1 = fx[idx]
-        aux2 = fx[idx+1]
-    m = aux1
-    M = aux2
+        diff = abs(fx[idx] - fx[idx+1])
+        m = fx[idx]
+        M = fx[idx+1]
+        print(m, M, " <<", diff)
     return m, M
+
 
 
 """
 Dado un mensaje y su alfabeto con su distribución de probabilidad
 dar la representación binaria de x/2**(t) siendo t el menor 
 entero tal que 1/2**(t)<M-m, x entero (si es posible par) tal 
-que m/(2**(t)) <= x < M / (2**(t))set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+que m/(2**(t)) <= x < M / (2**(t))
 
 mensaje='ccda'
 alfabeto=['a','b','c','d']
@@ -102,6 +102,7 @@ def FindX(m, M):
     x = []
     res = 1
     NoOnes = True
+    iterations = 0
     while NoOnes and iterations < 100:
         pwr = (1/t)
         diff = abs((M/pwr) - (m/pwr))
@@ -126,7 +127,10 @@ def EncodeArithmetic1(mensaje, alfabeto, probabilidades):
     m, M = Arithmetic(mensaje, alfabeto, probabilidades)
     x, t = FindX(m, M)
     return dec2bin(x/t)
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttabset tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+
+
+
+
 """
 Dado un mensaje y su alfabeto con su distribución de probabilidad
 dar el código que representa el mensaje obtenido a partir de la 
@@ -152,37 +156,56 @@ def EncodeArithmetic2(mensaje, alfabeto, probabilidades):
         i += 1
     return strng + '1'
 
+
+
 """
 Dada la representación binaria del número que representa un mensaje, la
 longitud del mensaje y el alfabeto con su distribución de probabilidad 
 dar el mensaje original
+DecodeArithmetic(code,longitud,alfabeto,probabilidades)='aaaa'
 code='0'
 longitud=4
-alfabeto=['a','b','c','d']
-probabilidades=[0.4,0.3,0.2,0.1]
-DecodeArithmetic(code,longitud,alfabeto,probabilidades)='aaaa'
-
-code='111000001'
-DecodeArithmetic(code,4,alfabeto,probabilidades)='ccda'
-DecodeArithmetic(code,5,alfabeto,probabilidades)='ccdab'
-
 """
+
+def FindIndex(val, cdf):
+    for i in range(0, len(cdf)):
+        if (val < cdf[i]): 
+            return i
+    return len(cdf)-1
+
 def DecodeArithmetic(code, n, alfabeto, probabilidades):
     dec = ''
     f = cdf(probabilidades)
+    print('F = ', f)
     while len(dec) < n:
         t = 2
         aux = 0
         for c in code:
-            aux += str(c)*(1/t)
-            t = t<<1
-        asdasasda = f[0]
+            aux += float(c)*(1/t)
+            t = t*2
+        print(aux)
+        idx = FindIndex(aux, f) - 1
+        charac = f[idx]
+        dec += alfabeto[ idx ]
     #complete this shit  	
     return dec
 
+
+alfabeto=['a','b','c','d']
+probabilidades=[0.4, 0.3, 0.2, 0.1]
+
+code='111000001'
+dec1 = DecodeArithmetic(code,4,alfabeto,probabilidades) # ='ccda'
+dec2 = DecodeArithmetic(code,5,alfabeto,probabilidades) # ='ccdab'
+
+print(dec1, '<- Dec1 || Dec2 ->', dec2)
+
+
+
+
 '''
 Función que compara la longitud esperada del 
-mensaje con la obtenida con la codificación aritméticaset tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+mensaje con la obtenida con la codificación aritmética
 '''
 
 def comparacion(mensaje,alfabeto,probabilidades):
@@ -192,7 +215,7 @@ def comparacion(mensaje,alfabeto,probabilidades):
         p=p*probabilidades[indice[mensaje[i]]-1]
     aux=-math.log(p,2), len(EncodeArithmetic1(mensaje,alfabeto,probabilidades)), len(EncodeArithmetic2(mensaje,alfabeto,probabilidades))
     print('Información y longitudes:',aux)    
-    return auxset tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+    return aux
         
         
 '''
@@ -202,26 +225,26 @@ con las frecuencias esperadas 50, 20, 15, 10 y 5 para los caracteres
 esperadas con las obtenidas.
 '''
 
-alfabeto=['a','b','c','d','e']
-probabilidades=[0.5, 0.2, 0.15, 0.1, 0.05]
-U = 50*'a' + 20*'b' + 15*'c' + 10*'d' + 5*'e'
-def rd_choice(X,k = 1):
-    Y = []
-    for _ in range(k):
-        Y += [random.choice(X)]
-    return Y
+# alfabeto=['a','b','c','d','e']
+# probabilidades=[0.5, 0.2, 0.15, 0.1, 0.05]
+# U = 50*'a' + 20*'b' + 15*'c' + 10*'d' + 5*'e'
+# def rd_choice(X,k = 1):
+#     Y = []
+#     for _ in range(k):
+#         Y += [random.choice(X)]
+#     return Y
 
-l_max=20
+# l_max=20
 
-for _ in range(10):
-    n=random.randint(10,l_max)
-    L = rd_choice(U, n)
-    mensaje = ''
-    for x in L:
-        mensaje += x
-    print('---------- ',mensaje)    
-    C=comparacion(mensaje,alfabeto,probabilidades)
-    print(C)
+# for _ in range(10):
+#     n=random.randint(10,l_max)
+#     L = rd_choice(U, n)
+#     mensaje = ''
+#     for x in L:
+#         mensaje += x
+#     print('---------- ',mensaje)    
+#     C=comparacion(mensaje,alfabeto,probabilidades)
+#     print(C)
 
     
         
@@ -230,7 +253,6 @@ for _ in range(10):
 Generar 10 mensajes aleatorios de longitud 10<=n<=100 aleatoria 
 con las frecuencias esperadas 50, 20, 15, 10 y 5 para los caracteres
 'a', 'b', 'c', 'd', 'e' y codificarlo.
-'''
 alfabeto=['a','b','c','d','e']
 probabilidades=[0.5, 0.2, 0.15, 0.1, 0.05]
 U = 50*'a'+20*'b'+15*'c'+10*'d'+5*'e'
@@ -254,6 +276,7 @@ for _ in range(10):
     print(C1)
     print(C2)
 
+'''
     
 
 
