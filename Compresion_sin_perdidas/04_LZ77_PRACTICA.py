@@ -48,7 +48,7 @@ LZ77Decode(mensaje)='patadecabra'
 """   
 
 def getDepthMessage(codigo, idx):
-    c2 = codigo[idx-1]
+    '''c2 = codigo[idx-1]
 
     aux = c2[1]
     idx2 = c2[0]-1
@@ -58,8 +58,8 @@ def getDepthMessage(codigo, idx):
         aux += c2[1]
         idx2 = c2[0]-1
         c2 = codigo[idx2]
-    salida += aux[::-1]
-    return salida
+    salida += aux[::-1]'''
+    return 'a'
 
 
 def getDepthString(codigo, OFFSET, SIZE):
@@ -70,16 +70,25 @@ def getDepthString(codigo, OFFSET, SIZE):
 
 def LZ77Decode(codigo):
 	mensaje = ''
+	idx = 1
 	for c in codigo:
-		OFFSET = c[0]
-		SIZE = c[1]
-		CHAR = c[2]
+		code = c
+		OFFSET= code[0]
+		SIZE  = code[1]
+		CHAR  = code[2]
 		if (OFFSET==0):
-			mensaje += CHAR
+			for i in xrange(0, SIZE-1):
+				mensaje += CHAR
+				code = codigo[idx+i]
+
 		else:
-			aux = getDepthString(codigo, OFFSET, SIZE)
+			aux = getDepthString(codigo, OFFSET+i, SIZE)
 			mensaje += aux
 			mensaje += CHAR
+			for i in xrange(0, SIZE-1):
+				mensaje += CHAR
+		++idx
+				
 
     
     
