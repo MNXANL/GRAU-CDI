@@ -35,9 +35,52 @@ LZ78Code(mensaje)=[
 ]
   
 """
+
+def getDepthMessage(codigo, idx):
+    c2 = codigo[idx-1]
+
+    aux = c2[1]
+    idx2 = c2[0]-1
+    c2 = codigo[idx2]
+
+    while(idx2 >= 0):
+        aux += c2[1]
+        idx2 = c2[0]-1
+        c2 = codigo[idx2]
+    salida += aux[::-1]
+    return salida
+
+def find(codigo, letra):
+    for c in codigo:
+        aux = str()
+        if (c[0] == 0):
+            aux = c[1]
+        else:
+            
+            c2 = codigo[c[0]-1]
+            aux2 = c2[1]
+            idx = c2[0]-1
+            c2 = codigo[idx]
+    
+            while(idx >= 0):
+                aux2 += c2[1]
+                idx = c2[0]-1
+                c2 = codigo[idx]
+            aux += aux2[::-1]
+            aux += c[1]
+        if aux + c
+
+    return False
+
 def LZ78Code(mensaje):
     code = list()
-    # ...
+    aux = 0
+    for m in mensaje:
+        entry = list()
+        for c in range(code.length(), 0, -1)
+
+        code += entry
+    code += [aux, 'EOF']
     return code
     
 
@@ -80,19 +123,10 @@ def LZ78Decode(codigo):
     for c in codigo:
         idx = c[0]
         if c[1] != 'EOF':
-            if idx == 0:  res += c[1]
+            if idx == 0:  
+                res += c[1]
             else:
-                c2 = codigo[idx-1]
-
-                aux = c2[1]
-                idx2 = c2[0]-1
-                c2 = codigo[idx2]
-        
-                while(idx2 >= 0):
-                    aux += c2[1]
-                    idx2 = c2[0]-1
-                    c2 = codigo[idx2]
-                res += aux[::-1]
+                res += getDepthMessage(codigo, idx)
                 res += c[1]
         else:
             idx2 = idx-1

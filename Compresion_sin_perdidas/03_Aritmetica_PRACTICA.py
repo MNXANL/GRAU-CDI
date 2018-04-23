@@ -165,6 +165,7 @@ dar el mensaje original
 DecodeArithmetic(code,longitud,alfabeto,probabilidades)='aaaa'
 code='0'
 longitud=4
+<<<<<<< HEAD
 """
 
 def FindIndex(val, cdf):
@@ -200,6 +201,44 @@ dec2 = DecodeArithmetic(code,5,alfabeto,probabilidades) # ='ccdab'
 
 print(dec1, '<- Dec1 || Dec2 ->', dec2)
 
+=======
+
+alfabeto=['a','b','c','d']
+probabilidades=[0.4, 0.3, 0.2, 0.1]
+
+code='111000001'
+dec1 = DecodeArithmetic(code,4,alfabeto,probabilidades) # ='ccda'
+dec2 = DecodeArithmetic(code,5,alfabeto,probabilidades) # ='ccdab'
+
+"""
+
+def FindIndex(val, cdf):
+    for i in range(0, len(cdf)):
+        if (val < cdf[i]): 
+            return i
+    return len(cdf)-1
+
+def DecodeArithmetic(code, n, alfabeto, probabilidades):
+    dec = ''
+    f = cdf(probabilidades)
+    t = 2
+    Xi = 0
+    for c in code:
+        Xi += float(c)*(1/t)
+        t = t*2
+
+    while len(dec) < n:
+        idx = FindIndex(Xi, f) - 1
+        Min = f[idx]
+        Max = f[idx+1]
+        dec += alfabeto[ idx ]
+        Xi = (Xi - Min)/(Max-Min)
+        #print(Xi, idx, dec, Min, Max, ">> \n")
+
+    return dec
+
+
+>>>>>>> a7baa0ab1ee11992413ce36c0fa67abfc1821624
 
 
 

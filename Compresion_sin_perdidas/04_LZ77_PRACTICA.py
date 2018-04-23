@@ -8,13 +8,21 @@ algoritmo LZ77
 
 
 mensaje='cabracadabrarrarr'
+[Offset, longitud, char]
+ <--     
 LZ77Code(mensaje,12,18)=[[0, 0, 'c'], [0, 0, 'a'], 
   [0, 0, 'b'], [0, 0, 'r'], [3, 1, 'c'], [2, 1, 'd'], 
   [7, 4, 'r'], [3, 4, 'EOF']]
   
 """
 
-def LZ77Code(mensaje,S=12,W=18):
+def LZ77Code(mensaje, S=12, W=18):
+	Code = list()
+	w = W
+	while (w > 0)
+		w--
+		char = 
+		code += [, , char]
     
       
 """
@@ -24,11 +32,55 @@ correspondiente
 code=[[0, 0, 'p'], [0, 0, 'a'], [0, 0, 't'], [2, 1, 'd'], 
       [0, 0, 'e'], [0, 0, 'c'], [4, 1, 'b'], [0, 0, 'r'], [3, 1, 'EOF']]
 
+code=[
+		1	[0, 0, 'p'], 
+		2	[0, 0, 'a'], 
+		3	[0, 0, 't'], 
+		4	[2, 1, 'd'], 
+		5	[0, 0, 'e'], 
+		6	[0, 0, 'c'], 
+		7	[4, 1, 'b'], 
+		8	[0, 0, 'r'], 
+		9	[3, 1, 'EOF']
+]
+
 LZ77Decode(mensaje)='patadecabra'
 """   
-def LZ77Decode(codigo):
 
-    
+def getDepthMessage(codigo, idx):
+    c2 = codigo[idx-1]
+
+    aux = c2[1]
+    idx2 = c2[0]-1
+    c2 = codigo[idx2]
+
+    while(idx2 >= 0):
+        aux += c2[1]
+        idx2 = c2[0]-1
+        c2 = codigo[idx2]
+    salida += aux[::-1]
+    return salida
+
+
+def getDepthString(codigo, OFFSET, SIZE):
+	code = codigo[OFFSET-1]
+	mnsj = code[2]
+	idx = 
+
+
+def LZ77Decode(codigo):
+	mensaje = ''
+	for c in codigo:
+		OFFSET = c[0]
+		SIZE = c[1]
+		CHAR = c[2]
+		if (OFFSET==0):
+			mensaje += CHAR
+		else:
+			aux = getDepthString(codigo, OFFSET, SIZE)
+			mensaje += aux
+			mensaje += CHAR
+
     
     
 
