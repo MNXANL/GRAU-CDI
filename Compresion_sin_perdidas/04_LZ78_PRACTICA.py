@@ -7,80 +7,65 @@ algoritmo LZ78
 
 
 mensaje='wabba wabba wabba wabba woo woo woo'
-LZ78Code(mensaje)=[[0, 'w'], [0, 'a'], [0, 'b'], [3, 'a'], 
-                   [0, ' '], [1, 'a'], [3, 'b'], [2, ' '], 
-                   [6, 'b'], [4, ' '], [9, 'b'], [8, 'w'], 
-                   [0, 'o'], [13, ' '], [1, 'o'], [14, 'w'], 
-                   [13, 'o'], [0, 'EOF']]
-
-LZ78Code(mensaje)=[
-   1 [0, 'w'], 
-   2 [0, 'a'], 
-   3 [0, 'b'], 
-   4 [3, 'a'], 
-   5 [0, ' '], 
-   6 [1, 'a'], 
-   7 [3, 'b'], 
-   8 [2, ' '], 
-   9 [6, 'b'], 
-  10 [4, ' '], 
-  11 [9, 'b'], 
-  12 [8, 'w'], 
-  13 [0, 'o'], 
-  14 [13, ' '],
-  15 [1, 'o'],
-  16 [14, 'w'], 
-  17 [13, 'o'], 
-  18 [0, 'EOF']
-]
-  
+LZ78Code(mensaje)=
+[[0, 'w'], [0, 'a'], [0, 'b'], [3, 'a'], 
+[0, ' '], [1, 'a'], [3, 'b'], [2, ' '], 
+[6, 'b'], [4, ' '], [9, 'b'], [8, 'w'], 
+[0, 'o'], [13, ' '], [1, 'o'], [14, 'w'], 
+[13, 'o'], [0, 'EOF']]
 """
 
-def getDepthMessage(codigo, idx):
-    c2 = codigo[idx-1]
 
-    aux = c2[1]
-    idx2 = c2[0]-1
-    c2 = codigo[idx2]
-
-    while(idx2 >= 0):
-        aux += c2[1]
-        idx2 = c2[0]-1
-        c2 = codigo[idx2]
-    salida += aux[::-1]
-    return salida
-
-def find(codigo, letra):
+def find(codigo, letras):
+    i=0
+    idx=0
     for c in codigo:
-        aux = str()
-        if (c[0] == 0):
-            aux = c[1]
+        aux = ''
+        if c[0]==0: aux = c[1]
         else:
-            
-            c2 = codigo[c[0]-1]
-            aux2 = c2[1]
-            idx = c2[0]-1
-            c2 = codigo[idx]
-    
-            while(idx >= 0):
-                aux2 += c2[1]
-                idx = c2[0]-1
-                c2 = codigo[idx]
-            aux += aux2[::-1]
-            aux += c[1]
-        if aux + c
+            c_1 = codigo[ c[0]-1 ]
+            idx = c[0]
+            auxRev = c_1[1]
 
-    return False
+            while(c_1[0] > 0):
+                c_1 = codigo[ c_1[0]-1 ]
+                auxRev += c_1[1]
+
+            aux += auxRev[::-1] + c[1]
+        if (aux == letras):  return (True, i+1)
+        i = i+1
+    return (False, idx)
+
+
 
 def LZ78Code(mensaje):
     code = list()
-    aux = 0
-    for m in mensaje:
-        entry = list()
-        for c in range(code.length(), 0, -1)
+    i = 0
+    SIZE = len(mensaje)
+    while i < SIZE:
+        idx = 0
+        m = mensaje[i]
 
-        code += entry
-    code += [aux, 'EOF']
+        (found, idx) = find(code, m)
+        while found and i<SIZE-1:
+            i += 1
+            m += mensaje[i]
+            (found, idx2) = find(code, m)
+            if found: 
+                idx = idx2
+
+
+        if  len(m) == 1 :#and i < SIZE-1:  
+            code += [[ 0, m ]]
+        elif len(m) > 1 :#and i < SIZE-1:  
+            code += [[ idx, m[-1] ]]
+        #elif len(m) > 1 and i == SIZE-1:  
+        #    code += [[ idx, 'EOF' ]]
+        #else:  
+        #    code += [[ 0, 'EOF' ]]
+
+        i += 1
+    code += [[ 0, 'EOF' ]]
     return code
     
 
@@ -94,29 +79,26 @@ code=[[0, 'm'], [0, 'i'], [0, 's'], [3, 'i'], [3, 's'],
       [10, 'p'], [7, 'i'], [0, ' '], [0, 'r'], [2, 'v'], 
       [0, 'e'], [14, 'EOF']]
 
-LZ78Code(mensaje)=[
-   1 [0, 'w'], 
-   2 [0, 'a'], 
-   3 [0, 'b'], 
-   4 [3, 'a'], 
-   5 [0, ' '], 
-   6 [1, 'a'], 
-   7 [3, 'b'], 
-   8 [2, ' '], 
-
-   9 [6, 'b'], 
-  10 [4, ' '], 
-  11 [9, 'b'], 
-  12 [8, 'w'], 
-  13 [0, 'o'], 
-  14 [13, ' '],
-  15 [1, 'o'],
-  16 [14, 'w'], 
-  17 [13, 'o'], 
-  18 [0, 'EOF']
-]
 LZ78Decode(mensaje)='mississippi mississippi river'
 """    
+
+
+def getDepthMessage(codigo, idx):
+    c2 = codigo[idx-1]
+
+    aux = c2[1]
+    idx2 = c2[0]-1
+    c2 = codigo[idx2]
+
+    while(idx2 >= 0):
+        aux += c2[1]
+        idx2 = c2[0]-1
+        c2 = codigo[idx2]
+
+    salida = aux[::-1]
+    return salida
+
+
 def LZ78Decode(codigo):
     res = ''
     i = 0;
@@ -132,7 +114,6 @@ def LZ78Decode(codigo):
             idx2 = idx-1
             if idx2>0: res += codigo[idx-1][1]
     return res
-
 
 
 
@@ -176,3 +157,4 @@ if (mensaje!=mensaje_recuperado):
     print(mensaje[-5:],mensaje_recuperado[-5:])
 
 
+''' '''
