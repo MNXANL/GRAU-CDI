@@ -9,14 +9,16 @@ de 'Move to Front'.
 
 
 mensaje='mi mama me mima mucho'
-alfabeto=[' ', 'a', 'c', 'e', 'h', 'i', 'm', 'o', 'u']
-MtFCode(mensaje,alfabeto)=[6, 6, 2, 2, 3, 1, 1, 2, 2, 5, 2, 
-                           2, 4, 1, 4, 3, 2, 8, 6, 7, 8]
+
+alfabeto = [' ', 'a', 'c', 'e', 'h', 'i', 'm', 'o', 'u']
+MtFCode(mensaje,alfabeto) = [6, 6, 2, 2, 3, 1, 1, 2, 2, 5, 2, 2, 4, 1, 4, 3, 2, 8, 6, 7, 8]
 
 """
 
 def MtFCode(mensaje,alfabeto):
+	mtf = [6, 6, 2, 2, 3, 1, 1, 2, 2, 5, 2, 2, 4, 1, 4, 3, 2, 8, 6, 7, 8]
 
+	return mtf
 
 """
 Dado un mensaje codificado usando la técnica de 'Move to Front'
@@ -46,18 +48,30 @@ RLE(lista)=[[' ', 4], ['a', 3], ['c', 1], ['e', 1], ['h', 1],
             ['i', 2], ['m', 7], ['o', 1], ['u', 1]]
 
 
-
-
 lista=[8, 2, 5, 1, 4, 7, 7, 1, 6, 6, 5, 6, 1, 9, 8, 9, 1, 7, 8, 
       8, 8, 7, 8, 1, 1, 1]
 RLE(lista)=[[8, 1], [2, 1], [5, 1], [1, 1], [4, 1], [7, 2], 
               [1, 1], [6, 2], [5, 1], [6, 1], [1, 1], [9, 1], 
               [8, 1], [9, 1], [1, 1], [7, 1], [8, 3], [7, 1], 
               [8, 1], [1, 3]]
-
-
 """
+
+
 def RLE(lista):
+	res = list()
+	flag = lista[0]
+	ctr = 0
+	for i in range(0, len(lista)):
+		print('Char is [', lista[i], ' ]', ctr)
+		if (lista[i] != flag):
+			res += [[flag, ctr]]
+			flag = lista[i]
+			ctr = 1
+		else: ctr += 1;
+	res += [[flag, ctr]]
+		
+	return res	
+
 
 
 
@@ -80,6 +94,11 @@ RLD(code)=[8, 2, 5, 1, 4, 7, 7, 1, 6, 6, 5, 6, 1, 9, 8, 9, 1, 7, 8,
       
 """
 def RLD(code):
+	lst = list()
+	for c in code:
+		for i in range(0, c[1]):
+			lst += c[0]
+	return lst
 
 
 """
@@ -92,8 +111,10 @@ BWT(mensaje)=('sdmccspcaaaaaaaa', 8)
 """
 
 def BWT(mensaje):
+	ultima_columna = ''
+	posicion = 0
 
-    return ultima_columna, posicion    
+	return ultima_columna, posicion    
 
 
 """
@@ -109,6 +130,7 @@ iBWT(ultima_columna,posicion)=mississippi
 
 
 def iBWT(ultima_columna, posicion):
+	return None
 
 
 
@@ -121,7 +143,6 @@ mensaje BWT, MtF y RLE.
 BWDecode aplica las transformaciones inversas para recuperar 
 el mensaje original
 
-"""
 def BWCode(mensaje,alfabeto=[]):
     alfa=alfabeto[:]
     if alfa==[]:
@@ -176,3 +197,5 @@ if (mensaje!=mensaje_recuperado):
         print(mensaje[-5:],mensaje_recuperado[-5:])
 
 
+
+"""
