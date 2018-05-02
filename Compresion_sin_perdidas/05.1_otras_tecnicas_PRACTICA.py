@@ -10,15 +10,37 @@ de 'Move to Front'.
 
 mensaje='mi mama me mima mucho'
 
-alfabeto = [' ', 'a', 'c', 'e', 'h', 'i', 'm', 'o', 'u']
-MtFCode(mensaje,alfabeto) = [6, 6, 2, 2, 3, 1, 1, 2, 2, 5, 2, 2, 4, 1, 4, 3, 2, 8, 6, 7, 8]
+alfabeto = 
+    [' ', 'a', 'c', 'e', 'h', 'i', 'm', 'o', 'u']
+
+MtFCode(mensaje,alfabeto) = 
+    [6, 6, 2, 2, 3, 1, 1, 2, 2, 5, 2, 2, 4, 1, 4, 3, 2, 8, 6, 7, 8]
 
 """
 
-def MtFCode(mensaje,alfabeto):
-	mtf = [6, 6, 2, 2, 3, 1, 1, 2, 2, 5, 2, 2, 4, 1, 4, 3, 2, 8, 6, 7, 8]
+def charToFrontOfAlphabet(index, alfabeto):
+    alfa = alfabeto
+    Front = alfabeto[index]
+    for i in range(index, 0, -1):
+        alfa[i] = alfa[i-1]
+    alfa[0] = Front
+    return alfa
 
-	return mtf
+def getPos(letra, alfabeto):
+    for i in range(0, len(alfabeto)):
+        if alfabeto[i] == letra: 
+            return i 
+    return len(alfabeto)
+
+def MtFCode(mensaje, alfabeto):
+    mtf = list()
+    alfa = alfabeto
+    for m in mensaje:
+        idx = getPos(m, alfa)
+        mtf += [idx]
+        alfa = charToFrontOfAlphabet(idx, alfa)
+    return mtf
+
 
 """
 Dado un mensaje codificado usando la técnica de 'Move to Front'
@@ -33,8 +55,10 @@ MtFDecode(code,alfabeto)='telefono television telele'
 
 def MtFDecode(code,alfabeto):
     dec = ''
+    alfa = alfabeto
     for i in code:
-        dec += alfabeto[i]
+        dec += alfa[i]
+        alfa = charToFrontOfAlphabet(i, alfa)
     return dec
 
 
@@ -58,19 +82,19 @@ RLE(lista)=[[8, 1], [2, 1], [5, 1], [1, 1], [4, 1], [7, 2],
 
 
 def RLE(lista):
-	res = list()
-	flag = lista[0]
-	ctr = 0
-	for i in range(0, len(lista)):
-		print('Char is [', lista[i], ' ]', ctr)
-		if (lista[i] != flag):
-			res += [[flag, ctr]]
-			flag = lista[i]
-			ctr = 1
-		else: ctr += 1;
-	res += [[flag, ctr]]
-		
-	return res	
+  res = list()
+  flag = lista[0]
+  ctr = 0
+  for i in range(0, len(lista)):
+    print('Char is [', lista[i], ' ]', ctr)
+    if (lista[i] != flag):
+      res += [[flag, ctr]]
+      flag = lista[i]
+      ctr = 1
+    else: ctr += 1;
+  res += [[flag, ctr]]
+    
+  return res  
 
 
 
@@ -89,16 +113,17 @@ code=[[8, 1], [2, 1], [5, 1], [1, 1], [4, 1], [7, 2],
               [1, 1], [6, 2], [5, 1], [6, 1], [1, 1], [9, 1], 
               [8, 1], [9, 1], [1, 1], [7, 1], [8, 3], [7, 1], 
               [8, 1], [1, 3]]
-RLD(code)=[8, 2, 5, 1, 4, 7, 7, 1, 6, 6, 5, 6, 1, 9, 8, 9, 1, 7, 8, 
-      8, 8, 7, 8, 1, 1, 1]
-      
+RLD(code)=
+[8, 2, 5, 1, 4, 7, 7, 1, 6, 6, 5, 6, 1, 9, 8, 9, 1, 7, 8, 8, 8, 7, 8, 1, 1, 1]
+
 """
 def RLD(code):
-	lst = list()
-	for c in code:
-		for i in range(0, c[1]):
-			lst += c[0]
-	return lst
+    lst = list()
+    for c in code:
+        for i in range(0, c[1]):
+            lst += [c[0]]
+
+    return lst.sort()
 
 
 """
@@ -110,11 +135,36 @@ BWT(mensaje)=('sdmccspcaaaaaaaa', 8)
 
 """
 
-def BWT(mensaje):
-	ultima_columna = ''
-	posicion = 0
+def mtf(msg):
+    tail = msg[:len(msg)-1]
+    head = msg[-1]
+    res = head+tail;
+    return res
 
-	return ultima_columna, posicion    
+def getRotations(mensaje):
+    lst = list()
+    msg = mensaje
+    for i in range(0, len(mensaje)):
+        lst += [msg]
+        msg = mtf(msg)
+    res = sorted(lst)
+    return res
+
+def BWT(mensaje):
+    ultima_columna = ''
+    posicion = 0
+    BWMatrix = getRotations(mensaje)
+    print(BWMatrix)
+    lastChar = 'z'
+    for i in range(0, len(mensaje)):
+        ultima_columna += BWMatrix[i][-1]
+        if (BWMatrix[i][-1] < lastChar):
+            lastChar = BWMatrix[i][-1]
+        if (BWMatrix[i] == mensaje):
+            posicion = i
+    return ultima_columna, posicion    
+
+
 
 
 """
@@ -130,9 +180,14 @@ iBWT(ultima_columna,posicion)=mississippi
 
 
 def iBWT(ultima_columna, posicion):
-	return None
+    mensaje = ''.join(sorted(ultima_columna))
+    BWMatrix = getRotations(mensaje)
+    print(BWMatrix)
+    return BWMatrix[4]
 
-
+ultima_columna='pssmipissii'
+posicion=4
+print( iBWT(ultima_columna,posicion) )
 
 
 
