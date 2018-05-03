@@ -53,22 +53,52 @@ def LZ78Code(mensaje):
             (found, idx2) = find(code, m)
             if found: 
                 idx = idx2
-
-
-        if  len(m) == 1 :#and i < SIZE-1:  
-            code += [[ 0, m ]]
-        elif len(m) > 1 :#and i < SIZE-1:  
+        if found and i == SIZE-1:
+            code += [[ idx, 'EOF' ]]
+        elif  len(m) == 1 :
+            code += [[ 0, m[-1] ]]
+        elif len(m) > 1 :
             code += [[ idx, m[-1] ]]
-        #elif len(m) > 1 and i == SIZE-1:  
-        #    code += [[ idx, 'EOF' ]]
-        #else:  
-        #    code += [[ 0, 'EOF' ]]
-
         i += 1
-    code += [[ 0, 'EOF' ]]
+    return code
+
+
+def LZ78Code2(mensaj): # Version con char extra de EOF
+    mensaje = mensaj + '@'
+    code = list()
+    i = 0
+    SIZE = len(mensaje)
+    while i < SIZE:
+        idx = 0
+        m = mensaje[i]
+
+        (found, idx) = find(code, m)
+        while found and i<SIZE-1:
+            i += 1
+            m += mensaje[i]
+            (found, idx2) = find(code, m)
+            if found: 
+                idx = idx2
+        
+        if m[-1] != '@':
+            out = m[-1]
+        else: 
+            out = 'EOF'
+            
+        if  len(m) == 1 :
+            code += [[ 0, out ]]
+        elif len(m) > 1 :
+            code += [[ idx, out ]]
+        i += 1
     return code
     
 
+code=[[0, 'm'], [0, 'i'], [0, 's'], [3, 'i'], [3, 's'], 
+      [2, 'p'], [0, 'p'], [2, ' '], [1, 'i'], [5, 'i'], 
+      [10, 'p'], [7, 'i'], [0, ' '], [0, 'r'], [2, 'v'], 
+      [0, 'e'], [14, 'EOF']]
+print( LZ78Code('mississippi mississippi river'))
+print( code )
 
 """
 Dado un mensaje codificado con el algoritmo LZ78 hallar el mensaje 
@@ -157,4 +187,3 @@ if (mensaje!=mensaje_recuperado):
     print(mensaje[-5:],mensaje_recuperado[-5:])
 
 
-''' '''
