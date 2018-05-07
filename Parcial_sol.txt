@@ -1,0 +1,63 @@
+Parcial.txt
+Aquí SOLO se ponen las respuestas del parcial, el enunciado está en Parcial.pdf!
+------------------------------------------------------------------------------
+2)  ¿Puede existir un código binario con palabras de longitudes [2,3,3,4,5,6,6,6,6,7,7,8,8,8,8,9,9] ?
+	
+	L = [2,3,3,4,5,6,6,6,6,7,7,8,8,8,8,9,9]
+	print(' codigo final:', Code(L, 2))
+	  codigo final: ['00', '010', '011', '1000', '10010', '100110', '100111', '101000', '101001', '1010100', '1010101', '10101100', '10101101', '10101110', '10101111', '101100000', '101100001']
+	True
+
+
+3)  Una fuente S viene dada per la ddp 3/71 14/71 14/71 20/71 20/71
+Un código de Huffman asociado a S tiene una long media l. ¿Qué valores puede tomar?
+Trieu-ne una: ???????????????????
+a. Entre 2.146 y 3.146
+b. Entre 3.146 y 3.344
+c. Entre 3.344 y 4.146
+Your answer is incorrect.
+
+
+
+6)  Al aplicar la transformación de BW al texto etamasasomos se obtiene el resultado (la
+numeración de la posición empieza empieza por 0)
+	print( BWT('etamasasomos') )
+	('tmssaosmaoae', 3)
+
+
+7)  Con el alfabeto ['a','b','c','d'] y probabilidades [0.15,0.1,0.3,0.45] se ha codificado
+aritméticamente el mensaje dcba. ¿Qué valor de los siguientes puede representar el mensaje?
+	print( Arithmetic('dcba', ['a','b','c','d'], [0.15,0.1,0.3,0.45]) ) 
+	Rango (0.68275, 0.684775) --> 0.6838
+
+
+8)  ¿Cuántas palabras de longitud máxima se pueden añadir a un código binario con palabras de longitudes [2,3,3,4,4,5,6,6,6,7,8]?
+	L = [2,3,3,4,4,5,6,6,6,7,8]
+	print(kraft2(L, 2))
+	73.0
+
+9) Se ha aplicado la transformación de BW a un texto y el resultado ha sido [tmtmeoatmaeo, 10]
+(la numeración de la posición empieza empieza por 0). ¿Cuál es el texto original?
+	print( iBWT('tmtmeoatmaeo', 10) )
+	tematamotome
+
+10) De los siguientes conjuntos de palabras, ¿cuáles son código?
+Trieu-ne una o més:
+a.
+['00', '010', '011', '100', '101', '1100', '1101', '1110', '1111']
+b. ['00', '01', '100', '101', '110', '111', '1111']
+c. ['0', '10', '110', '111']
+d. ['00', '010', '011', '100', '101', '1100', '1101', '1110', '1111', '11111']
+RESPUESTA: 
+
+11) Con el alfabeto ['a','b','c','d'] y probabilidades [0.2,0.1,0.25,0.45] se ha codificado un mensaje de longitud 5 con el valor 0. 4208 . ¿Cuál es el mensaje?
+	alfa = ['a','b','c','d']
+	probs = [0.2, 0.1, 0.25, 0.45]
+	value = dec2bin(0.4208)
+	
+	print( DecodeArithmetic(value, 5, alfa, probs) )
+	ccdcc
+
+
+12) El resultado de cifrar un texto con LZ77 ha sido [[0, 0, 'p'], [0, 0, 'a'], [0, 0, 't'], [2, 3, 'p'], [4, 5, 'EOF']]. ¿Qué texto se ha codificado?
+	patatapatapa
