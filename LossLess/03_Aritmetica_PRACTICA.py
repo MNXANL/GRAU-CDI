@@ -124,6 +124,7 @@ def FindX(m, M):
 
     return res, (t>>1) 
 
+
 def EncodeArithmetic1(mensaje, alfabeto, probabilidades):
     m, M = Arithmetic(mensaje, alfabeto, probabilidades)
     x, t = FindX(m, M)
@@ -255,7 +256,6 @@ for _ in range(10):
 Generar 10 mensajes aleatorios de longitud 10<=n<=100 aleatoria 
 con las frecuencias esperadas 50, 20, 15, 10 y 5 para los caracteres
 'a', 'b', 'c', 'd', 'e' y codificarlo.
-'''
 alfabeto=['a','b','c','d','e']
 probabilidades=[0.5, 0.2, 0.15, 0.1, 0.05]
 U = 50*'a'+20*'b'+15*'c'+10*'d'+5*'e'
@@ -278,3 +278,21 @@ for _ in range(10):
     C2 = EncodeArithmetic2(mensaje,alfabeto,probabilidades)
     print(C1)
     print(C2)
+
+'''
+
+print('\n\n\n-------------')
+print( Arithmetic('acab', ['a','b','c','d'], [0.25, 0.15, 0.3, 0.3]) ) 
+print('-------------')
+print('##################')
+print('##################')
+
+
+
+
+print( DecodeArithmetic(dec2bin(0.04531), 5, ['a','b','c','d'], [0.2, 0.25, 0.25, 0.3]) )
+
+
+
+
+print( DecodeArithmetic(dec2bin(0.1094), 5, ['a','b','c','d'], [0.25, 0.25, 0.25, 0.25]) )

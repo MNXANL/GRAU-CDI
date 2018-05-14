@@ -15,8 +15,10 @@ Trieu-ne una: ???????????????????
 a. Entre 2.146 y 3.146
 b. Entre 3.146 y 3.344
 c. Entre 3.344 y 4.146
-Your answer is incorrect.
-
+	
+	p = [(3/71),(14/71),(14/71),(20/71),(20/71)]
+	print(H1(p))
+	2.146
 
 
 6)  Al aplicar la transformación de BW al texto etamasasomos se obtiene el resultado (la
@@ -42,15 +44,19 @@ aritméticamente el mensaje dcba. ¿Qué valor de los siguientes puede represent
 	tematamotome
 
 10) De los siguientes conjuntos de palabras, ¿cuáles son código?
-Trieu-ne una o més:
-a.
-['00', '010', '011', '100', '101', '1100', '1101', '1110', '1111']
+a. ['00', '010', '011', '100', '101', '1100', '1101', '1110', '1111']
 b. ['00', '01', '100', '101', '110', '111', '1111']
 c. ['0', '10', '110', '111']
 d. ['00', '010', '011', '100', '101', '1100', '1101', '1110', '1111', '11111']
-RESPUESTA: 
 
-11) Con el alfabeto ['a','b','c','d'] y probabilidades [0.2,0.1,0.25,0.45] se ha codificado un mensaje de longitud 5 con el valor 0. 4208 . ¿Cuál es el mensaje?
+
+a  #L = [2, 3, 3, 3, 3, 4, 4, 4, 4]
+b  #NO
+c  #L = [1, 2, 3, 3]
+d  #NO
+	RESPUESTA: [a, c] son códigos
+
+11) Con el alfabeto ['a','b','c','d'] y probabilidades [0.2,0.1,0.25,0.45] se ha codificado un mensaje de len=5 con el valor 0.4208 . ¿Cuál es el mensaje?
 	alfa = ['a','b','c','d']
 	probs = [0.2, 0.1, 0.25, 0.45]
 	value = dec2bin(0.4208)
@@ -59,5 +65,7 @@ RESPUESTA:
 	ccdcc
 
 
-12) El resultado de cifrar un texto con LZ77 ha sido [[0, 0, 'p'], [0, 0, 'a'], [0, 0, 't'], [2, 3, 'p'], [4, 5, 'EOF']]. ¿Qué texto se ha codificado?
+12) El resultado de cifrar un texto con LZ77 ha sido 
+[[0, 0, 'p'], [0, 0, 'a'], [0, 0, 't'], [2, 3, 'p'], [4, 5, 'EOF']]
+¿Qué texto se ha codificado?
 	patatapatapa

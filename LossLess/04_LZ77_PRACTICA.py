@@ -184,3 +184,13 @@ print('Longitud de mensaje codificado:', len(mensaje_codificado))
 print('Ratio de compresión:', ratio_compresion)
 
 
+
+
+coderino = [
+    [0, 0, 'p'],
+    [0, 0, 'a'],
+    [0, 0, 't'],
+    [2, 3, 'p'],
+    [4, 5, 'EOF']
+]
+print( LZ77Decode(coderino) )

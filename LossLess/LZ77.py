@@ -62,11 +62,18 @@ def LZ77_decode(tok):
 
 
 coderino = [
-    [0, 0, 'p'],
-    [0, 0, 'a'],
-    [0, 0, 't'],
-    [2, 3, 'p'],
-    [4, 5, 'EOF']
-]
-print( LZ77_encode('topkek pk', 12, 18) )
+[0, 0, 'a'], 
+[0, 0, 'b'], 
+[0, 0, 'c'], 
+[0, 0, 'd'], 
+[0, 0, 'e'], 
+
+[5, 2, 'a'], 
+[1, 1, 'd'], 
+[5, 2, 'e'], 
+[7, 2, 'EOF']
+] 
+print( LZ77_encode('abcdeabaaabdaab', 12, 18) )
+
+print( '\n ------------ \n' )
 print( LZ77_decode( coderino ) )
