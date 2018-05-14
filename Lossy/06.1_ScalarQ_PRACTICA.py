@@ -9,7 +9,7 @@ import scipy.ndimage
 from scipy.cluster.vq import vq, kmeans
 
 #%%
-imagen = misc.ascent()#Leo la imagen
+imagen = misc.ascent() #Leo la imagen
 (n,m)=imagen.shape # filas y columnas de la imagen
 plt.imshow(imagen, cmap=plt.cm.gray) 
 plt.xticks([])
@@ -21,11 +21,18 @@ Mostrar la imagen habiendo cuantizado los valores de los píxeles en
 2**k niveles, k=1..8
 
 Para cada cuantización dar la ratio de compresión y Sigma
-
+plt2.imshow(imagen, cmap=plt.cm.red) 
+plt2.show()
 Sigma=np.sqrt(sum(sum((imagenOriginal-imagenCuantizada)**2)))/(n*m)
 
 """
-
+imagen2 = misc.ascent() #Leo la imagen
+(n,m)=imagen2.shape # filas y columnas de la imagen
+plt.imshow(imagen2, cmap=plt.cm.gray)
+k = 4
+plt.xticks(np.arange(0, 2**k, step=1))
+plt.yticks(np.arange(0, 2**k, step=1))
+plt.show() 
 
 
 
