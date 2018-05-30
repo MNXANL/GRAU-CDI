@@ -10,7 +10,7 @@ import scipy.ndimage
 from scipy.cluster.vq import vq, kmeans
 
 #%%
-lena=scipy.misc.imread('../standard_test_images/lena_gray_512.png')
+lena=scipy.misc.imread('./Images/lena_gray_512.png')
 (n,m)=lena.shape # filas y columnas de la imagen
 plt.figure()    
 plt.imshow(lena, cmap=plt.cm.gray)
