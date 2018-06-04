@@ -20,6 +20,10 @@ from math import log2
 import matplotlib.pyplot as plt
 
 Z = (1 / sqrt(2))
+Z1 = (sqrt(11) / 11)
+Z3 = (sqrt(22) / 11)
+Z4 = (sqrt(2) / 2)
+Z5 = 3*(sqrt(22) / 22)
 
 c1 = np.array([ [Z, Z, 0, 0],
 				[Z,-Z, 0, 0],
@@ -41,8 +45,11 @@ c4 = np.array([ [0, 0, 0, 1],
 				[0, 1, 0, 0],
 				[1, 0, 0, 0]])
 
+
+
 def idct_bloque(p):
-	return (np.tensordot(np.tensordot(np.transpose(c2), p, axes=([1],[0])), c2, axes = ([1],[0]))).reshape(-1)
+	c = c1
+	return (np.tensordot(np.tensordot(np.transpose(c), p, axes=([1],[0])), c, axes = ([1],[0]))).reshape(-1)
 
 
 
@@ -74,7 +81,12 @@ def ratio_de_compresion(pixeles, escala, entradas, pixelesB):
 	den = (pixeles / pixelesB) * (pixeles / pixelesB) * log2(entradas) + entradas * pixelesB * pixelesB * log2(escala)
 	return (num/den)
 
-print("RATIO DE COMPRESION ->", ratio_de_compresion(64, 256, 1024, 4) )
+
+pixeles = 64
+escala = 256
+entradas = 1024
+pixelesBloque = 4
+print("RATIO DE COMPRESION ->", ratio_de_compresion(pixeles, escala, entradas, pixelesBloque) )
 
 
 
@@ -103,34 +115,28 @@ from numpy import array
 from numpy.linalg import inv
 from math import sqrt #(at line 7)
 
-mat1 = array([
-	[   sqrt(11)/11,    sqrt(11)/11,  3*sqrt(11)/11],
-	[   sqrt(2)/2,      sqrt(2)/2,    3*sqrt(2)/2  ],
-	[-3*sqrt(22)/22, -3*sqrt(22)/22,   sqrt(22)/11 ]
-])
+mat1 = np.array([ [ Z1,  Z1, 3*Z1],
+				[ Z,  Z, 3*Z],
+				[-Z5, -Z5,   Z3]])
 
-mat2 = array([
-	[   sqrt(11)/11,    sqrt(11)/11,  3*sqrt(11)/11],
-	[  -sqrt(2)/2,      sqrt(2)/2,                0],
-	[-3*sqrt(22)/22, -3*sqrt(22)/22,   sqrt(22)/11 ]
-])
+mat2 = np.array([ [ Z1,  Z1,  3*Z1],
+				[-Z4,  Z4, 0],
+				[-Z5, -Z5,   Z3]])
 
-mat3 = array([
-	[ 1,  1, 3],
-	[-1,  1, 0],
-	[-3, -3, 2]
-])
 
-mat4 = array([
-	[ 1,  1, 3],
-	[ 2,  2, 6],
-	[-3, -3, 2]
-])
+mat3 = np.array([ [ 1,  1, 3],
+				[-1,  1, 0],
+				[-3, -3, 2]])
+
+mat4 = np.array([ [ 1,  1, 3],
+				[ 2,  2, 6],
+				[-3, -3, 2]])
+
 
 # M is ortogonal iff   M^{-1} = M^{t}
 #
 def transpose_matrix():
-	matriz = mat1
+	matriz = mat2
 	inv_mat = inv(matriz)
 	mt = matriz.transpose()
     

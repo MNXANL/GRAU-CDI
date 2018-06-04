@@ -35,12 +35,16 @@ for k in range(1, 8):
     YT, YL = plt.yticks(np.arange(0, m, step=2**k))
     
     # Calcular los nuevos puntos
-    #for i in range (0, n*m):
-        
-    plt.subplot(331 + k)
+    JUMP = 2**k
+    for i in range (0, n*m, JUMP):
+    	Ini = (i-1)*JUMP
+    	Fin = (i)*(JUMP-1)
+    	Array = imagen[Ini:Fin]
+    	print('Array =', Array)
+
+    plt.subplot(421 + k)
     plt.imshow(imagen2, cmap=plt.cm.gray)
     
-    print("N = \n\n", n, '\n\n')
     
 plt.show() 
 
@@ -49,7 +53,7 @@ plt.show()
 #%%
 '''
 Mostrar la imagen cuantizando los valores de los pixeles de cada bloque
-n_bloque x n_bloque en 2^k niveles, siendo n_bloque=8 y k=2
+[N_Bloque x N_Bloque] en 2^k niveles, siendo n_bloque=8 y k=2
 
 Calcular Sigma y la ratio de compresión (para cada bloque 
 es necesario guardar 16 bits extra para los valores máximos 
