@@ -15,8 +15,33 @@ imagen = misc.ascent() #Leo la imagen
 plt.imshow(imagen, cmap=plt.cm.gray) 
 plt.xticks([])
 plt.yticks([])
-plt.show() 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 """
 Mostrar la imagen habiendo cuantizado los valores de los píxeles en
 2**k niveles, k=1..8
@@ -25,61 +50,6 @@ Para cada cuantización dar la ratio de compresión y Sigma
 
 Sigma = np.sqrt(sum(sum((imagenOriginal-imagenCuantizada)**2)))/(n*m)
 """
-
-
-
-
-imagenOriginal = misc.ascent() #Leo la imagen
-(n,m)=imagenOriginal.shape # filas y columnas de la imagen
-for k in range(2, 9):
-    #imagenCuantizada = plt.imshow(imagenOriginal, cmap=plt.cm.gray)
-    
-    # Marcar los puntos 
-    XT, XL = plt.xticks(np.arange(0, n, step=2**k))
-    YT, YL = plt.yticks(np.arange(0, m, step=2**k))
-    
-    # Calcular los nuevos puntos
-    #JUMP = 2**k
-    #for i in range (1, (n//JUMP)+1):
-    #Ini =  JUMP*(i-1)
-    #Fin = (JUMP*i)-1
-
-    #imagenParcial = imagenOriginal[Ini:Fin]
-    imagenCuantizada = misc.ascent()
-
-
-    # Setup del array de niveles
-    Lvl = 2**k
-    array = [ i*((n//Lvl) -1)    for i in range(0, Lvl)] ; array[0] = 0 ; array += [511] 
-    
-    
-    for i in range(0, n):
-        for j in range(0, n):
-            pixel = imagenCuantizada[i][j]
-            N = math.floor( (pixel* Lvl)/n ) 
-            NewPixel = array[N]
-            imagenCuantizada[i][j] = NewPixel
-
-    Sigma = np.sqrt(sum(sum((imagenOriginal-imagenCuantizada)**2)))/(n*m)
-    print('Sigma for k =', k, "->", Sigma)
-    plt.subplot(330 + k-1)
-    plt.imshow(imagenCuantizada, cmap=plt.cm.gray)
-    
-    
-plt.show() 
-
-
-
-#%%
-'''
-Mostrar la imagen cuantizando los valores de los pixeles de cada bloque
-[N_Bloque x N_Bloque] en 2^k niveles, siendo n_bloque=8 y k=2
-
-Calcular Sigma y la ratio de compresión (para cada bloque 
-es necesario guardar 16 bits extra para los valores máximos 
-y mínimos del bloque, esto supone 16/n_bloque**2 bits más por pixel).
-
-'''
 
 imagenOriginal = misc.ascent() #Leo la imagen
 (n,m)=imagenOriginal.shape # filas y columnas de la imagen
