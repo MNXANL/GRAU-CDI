@@ -47,8 +47,6 @@ Formato código Huffman:
 
 import collections
 
-# Totally not stolen from:
-# hstackoverflow.com/questions/10823877/what-is-the-fastest-way-to-flatten-arbitrarily-nested-lists-in-python
 def flatten(iterable):
     iterator = iter(iterable)
     array, stack = collections.deque(), collections.deque()
@@ -56,8 +54,7 @@ def flatten(iterable):
         try:
             value = next(iterator)
         except StopIteration:
-            if not stack:
-                return list(array)
+            if not stack: return list(array)
             iterator = stack.pop()
         else:
             if not isinstance(value, str) and isinstance(value, list):
@@ -65,6 +62,7 @@ def flatten(iterable):
                 iterator = iter(value)
             else:
                 array.append(value)
+
              
 def recursiveHuffman(curCode, tree):
     code0 = curCode + '0'
@@ -97,8 +95,28 @@ Dada la ddp p=[0.80, 0.1, 0.05, 0.05], hallar un código de Huffman asociado,
 la entropía de p y la longitud media de código de Huffman hallado.
 '''
 
+   
+'''
+Entropía, de la practica anterior
+'''
+import math
+def Entropy_sub1(p):
+    bits = 0.0
+    for Pi in p:
+        if Pi != 0:
+            bits += (-1 * Pi * math.log(Pi, 2))
+    return bits
+
+def Entropy(n):
+    SUM_VALS = sum(n)
+    Probs = map((lambda x: x/SUM_VALS), n)
+    return Entropy_sub1(Probs)
+
+
 p = [0.80, 0.1, 0.05, 0.05]
-print( Huffman(p) , '\n')
+print(Huffman(p) , Entropy(p), '\n')
+
+
 
 
 
@@ -111,7 +129,7 @@ la entropía de p y la longitud media de código de Huffman hallado.
 
 n = 2**8
 p256 = [1/n for _ in range(n)]
-#print( Huffman(p256), '\n')
+print(Huffman(p256) , Entropy(p256), '\n')
 
 
 
@@ -238,35 +256,3 @@ Si tenemos en cuenta la memoria necesaria para almacenar el diccionario,
 
 '''
 
-
-
-print('-------------------------------')
-print('-------------------------------')
-print('-------------------------------')
-print('-------------------------------')
-print('-------------------------------')
-print('-------------------------------')
-p = [(3/71),(14/71),(14/71),(20/71),(20/71)]
-p2=[(25/112), (3/14), (19/112), (11/56), (11/56)]
-print( Huffman(p2) , '\n')
-
-import math
-def H1(p):
-    bits = 0.0
-    for Pi in p:
-        if Pi != 0:
-            bits += (-1 * Pi * math.log(Pi, 2))
-    return bits
-
-
-'''
-Dada una lista de frecuencias n, hallar su entropía.
-'''
-def H2(n):
-    SUM_VALS = sum(n)
-    Probs = map((lambda x: x/SUM_VALS), n)
-    return H1(Probs)
-
-
-
-print(H1(p2))
